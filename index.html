@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>しりとりチャット</title>
+<script>
+async function sendWord() {
+    const userWord = document.getElementById('userWord').value;
+    const response = await fetch('/shiritori', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({word: userWord})
+    });
+    const data = await response.json();
+    document.getElementById('chat').innerHTML += `<p>プレイヤー: ${userWord}</p><p>AI: ${data.response}</p>`;
+}
+</script>
+</head>
+<body>
+<h1>しりとりチャット</h1>
+<input type="text" id="userWord">
+<button onclick="sendWord()">送信</button>
+<div id="chat"></div>
+</body>
+</html>
